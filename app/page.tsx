@@ -1,19 +1,17 @@
-import getCurrentUser from './actions/getCurrentUser';
-import getListings, { IListingsParams } from './actions/getListing';
+import getCurrentUser from "./actions/getCurrentUser";
+import getListings, { IListingsParams } from "./actions/getListing";
 
-import ClientOnly from './components/ClientOnly'
-import Container from './components/Container'
-import EmptyState from './components/EmptyState';
-import ListingCard from './components/listings/ListingCard';
-import { SafeListing } from './types';
+import ClientOnly from "./components/ClientOnly";
+import Container from "./components/Container";
+import EmptyState from "./components/EmptyState";
+import ListingCard from "./components/listings/ListingCard";
+import { SafeListing } from "./types";
 
 interface HomeProps {
-  searchParams: IListingsParams
+  searchParams: IListingsParams;
 }
 
-const Home: React.FC<HomeProps> = async ({
-  searchParams
-}) => {
+const Home = async ({ searchParams }: HomeProps) => {
   const listings = await getListings(searchParams);
   const currentUser = await getCurrentUser();
 
@@ -22,13 +20,14 @@ const Home: React.FC<HomeProps> = async ({
       <ClientOnly>
         <EmptyState showReset />
       </ClientOnly>
-    )
+    );
   }
 
   return (
     <ClientOnly>
       <Container>
-        <div className='
+        <div
+          className="
         pt-24
           grid
           grid-cols-1
@@ -38,7 +37,8 @@ const Home: React.FC<HomeProps> = async ({
           xl:grid-cols-5
           2xl:grid-cols-6
           gap-8
-        '>
+        "
+        >
           {listings.map((listing: SafeListing) => {
             return (
               <ListingCard
@@ -46,12 +46,12 @@ const Home: React.FC<HomeProps> = async ({
                 key={listing.id}
                 data={listing}
               />
-            )
+            );
           })}
         </div>
       </Container>
     </ClientOnly>
-  )
-}
+  );
+};
 
 export default Home;
